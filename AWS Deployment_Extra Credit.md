@@ -36,21 +36,26 @@
 
 ---------------------- CI/CD & Monitoring -------------------
 
-   +----------------+       +-------------------+
-   | GitHub Actions | ----> | Build & Test Code |
-   +----------------+       +-------------------+
-                                      |
-                                      v
-                             +----------------+
-                             | Deploy to ECS  |
-                             | Fargate/Lambda |
-                             +----------------+
-                                      |
-                                      v
-                             +----------------+
-                             | CloudWatch     |
-                             | Logs & Alarms  |
-                             +----------------+
+              +----------------+      
+              | GitHub Actions | 
+              +----------------+
+                      |
+                      v
+              +-------------------+
+              | Build & Test Code |
+              +-------------------+      
+                      |
+                      v
+               +----------------+
+               | Deploy to ECS  |
+               | Fargate/Lambda |
+               +----------------+
+                      |
+                      v
+               +----------------+
+               | CloudWatch     |
+               | Logs & Alarms  |
+               +----------------+
 
 **Step 1: Deploying the API**
 The first thing we want is to make our Flask REST API accessible in a reliable and scalable way. To do that, I’d start by containerizing the app using Docker. This makes sure it runs exactly the same in development and production.
