@@ -1,62 +1,65 @@
 **AWS Deployment**
 
-           +---------------------+
-           |  Flask API (Docker) |
-           +----------+----------+
-                      |
-                      v
-           +---------------------+
-           |  ECS Fargate /      |
-           |  Lambda + API GW    |
-           +----------+----------+
-                      |
-                      v
-           +---------------------+
-           |     Clients /       |
-           |  Public Endpoint    |
-           +---------------------+
+                       ┌─────────────────────────┐
+                       │     Flask API (Docker)  │
+                       └───────────┬─────────────┘
+                                   │
+                                   ▼
+                       ┌─────────────────────────┐
+                       │  ECS Fargate / Lambda   │
+                       │    + API Gateway        │
+                       └───────────┬─────────────┘
+                                   │
+                                   ▼
+                       ┌─────────────────────────┐
+                       │     Clients /           │
+                       │   Public Endpoint       │
+                       └─────────────────────────┘
+
 
 ---------------------- Data Ingestion -----------------------
 
-           +---------------------+
-           |   Raw Data in S3    |
-           +----------+----------+
-                      |
-                      v
-           +---------------------+
-           |  Ingestion Script   |
-           |  Lambda / ECS Task  |
-           +----------+----------+
-                      |
-                      v
-           +---------------------+
-           |   RDS Database      |
-           | PostgreSQL/MySQL    |
-           +---------------------+
+                        ┌─────────────────────────┐
+                        │      Raw Data in S3     │
+                        └───────────┬─────────────┘
+                                    │
+                                    ▼
+                        ┌─────────────────────────┐
+                        │   Ingestion Script      │
+                        │ (Lambda / ECS Task)     │
+                        └───────────┬─────────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────────┐
+                         │     RDS Database        │
+                         │  (PostgreSQL / MySQL)   │
+                         └─────────────────────────┘
+
 
 ---------------------- CI/CD & Monitoring -------------------
 
-              +----------------+      
-              | GitHub Actions | 
-              +----------------+
-                      |
-                      v
-              +-------------------+
-              | Build & Test Code |
-              +-------------------+      
-                      |
-                      v
-               +----------------+
-               | Deploy to ECS  |
-               | Fargate/Lambda |
-               +----------------+
-                      |
-                      v
-               +----------------+
-               | CloudWatch     |
-               | Logs & Alarms  |
-               +----------------+
+                            ┌───────────────────┐
+                            │   GitHub Actions  │
+                            └──────────┬────────┘
+                                       │
+                                       ▼
+                            ┌───────────────────┐
+                            │ Build & Test Code │
+                            └──────────┬────────┘
+                                       │
+                                       ▼
+                             ┌───────────────────┐
+                             │   Deploy to ECS   │
+                             │ (Fargate / Lambda)│
+                             └──────────┬────────┘
+                                        │
+                                        ▼
+                             ┌───────────────────┐
+                             │   CloudWatch      │
+                             │  Logs & Alarms    │
+                             └───────────────────┘
 
+-----------------------------------------------------------------
 **Step 1: Deploying the API**
 The first thing we want is to make our Flask REST API accessible in a reliable and scalable way. To do that, I’d start by containerizing the app using Docker. This makes sure it runs exactly the same in development and production.
 Once the app is containerized, there are two main ways I’d deploy it:
