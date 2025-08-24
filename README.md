@@ -80,3 +80,7 @@ python api.py
 - **Stats recomputation**: Each run overwrites yearly stats to ensure consistency.
 - **Error handling & logs**: Logs include start/end times and number of records ingested.
 - **Testing**: Run `pytest` in the project root to verify ingestion, stats, and API functionality.
+
+**Data Source**
+- Weather data (wx_data/*.txt) and the coding challenge can be found at the below Github repository:
+  https://github.com/corteva/code-challenge-template
