@@ -70,7 +70,7 @@ python api.py
 
 - `GET /api/weather/stats`
   - Returns yearly statistics per station.
-  - Query Parameters: Query Parameters: station_id, date, page, size
+  - Query Parameters: station_id, date, page, size
 
 
 
